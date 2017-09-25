@@ -1,15 +1,15 @@
-import { Config } from '../utils/config.js';
+import { Config } from 'config.js';
 
-class Base {
+class Base { 
   constructor() {
-    this.baseRequestUrl = Config.resuUrl;
+    this.baseRequestUrl = Config.restUrl;
   }
 
   // 对小程序请求的一个封装
   request(params, noRefetch) {
     var url = this.baseRequestUrl + params.url;
     wx.request({
-      url: '',
+      url,
       data: params.data,
       method: 'get' || params.type,
       header: {
@@ -18,11 +18,17 @@ class Base {
         'token': wx.getStorageSync('token')
       },
       success(res) {
-        params.sCallBack && params.sCallBack(res)
+        params.sCallback && params.sCallback(res.data)
       },
       fail(err) {
-        console.log(err)
+        console.error(err)
       }
     })
   }
 }
+
+export { Base };
+
+
+// 控制层 home
+// model层 home-model

@@ -1,4 +1,33 @@
+<!-- 最近商品模板 -->
+<import src="../tpls/products/products-tpl.wxml"/>
+
 <view>
-  <swiper></swiper>
-  <view>233</view>
+  <swiper indicator-dots="true" autoplay="true" class="swiper">
+    <block wx:for="{{bannerArr}}">
+      <swiper-item class="banner-item">
+        <image mode="aspectFill" class="image" src="{{item.img.url}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="home-main">
+    <view class="home-main-theme">
+      <view class="home-main-header">精选主题</view>
+      <view class="theme-box">
+        <block wx:for="{{themeArr}}">
+          <!-- 这里的逻辑是为了排成两个在上面，一个在下面,所以就弄成这样了， -->
+          <!-- 但是不够灵活，只能第二个是大图，第四个就不行了 -->
+          <view wx:if="{{index == 2}}" class="theme-item big" bindtap="onThemesItemTap" data-id="{{item.id}}" data-name="{{item.name}}">
+            <image src="{{item.topic_img.url}}"></image>
+          </view>
+          <view wx:else class="theme-item" bindtap="onThemesItemTap" data-id="{{item.id}}" data-name="{{item.name}}">
+            <image src="{{item.topic_img.url}}"></image>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="home-main-products">
+      <view class="home-main-header">最近新品</view>
+      <template is="products" data="{{productsArr}}"></template>
+    </view>
+  </view>
 </view>
