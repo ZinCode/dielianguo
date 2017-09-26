@@ -25,6 +25,11 @@ class Base {
       }
     })
   }
+
+  // 获取元素上的绑定值(他这个写法不是很好啊，只获取的是currentTarget)
+  getDataSet(event, key){
+    return event.currentTarget.dataset[key];
+  }
 }
 
 export { Base };

@@ -3,9 +3,9 @@
 
 <view>
   <swiper indicator-dots="true" autoplay="true" class="swiper">
-    <block wx:for="{{bannerArr}}">
-      <swiper-item class="banner-item">
-        <image mode="aspectFill" class="image" src="{{item.img.url}}"></image>
+    <block wx:for="{{bannerArr}}" wx:key="key_word">
+      <swiper-item class="banner-item" data-id="{{item.key_word}}" bindtap="onProductsItemTap">
+        <image mode="aspectFill" class="image"  src="{{item.img.url}}"></image>
       </swiper-item>
     </block>
   </swiper>

@@ -1,66 +1,54 @@
 // pages/product/product.js
+import { Product } from 'product-model.js';
+var product = new Product;
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    id: null,
+    countsArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    productCount: 1,
+    currentTabsIndex: 0,
+    tabBoxArr: ['商品详情', '产品参数', '售后保障']
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var id = options.id
+    this.data.id = id;
+    this._loadData();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  _loadData() {
+    product.getDetailInfo(this.data.id, data => {
+      this.setData({
+        product: data
+      })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  // 选择购物数量
+  bindPickerChange(e) {
+    var index = e.detail.value;
+    var selectedCount = this.data.countsArray[index]
+    this.setData({
+      productCount: selectedCount
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  // 切换详情mianban
+  onTabsItemTap(e) {
+    var index = product.getDataSet(e, 'index')
+    console.log(index)
+    this.setData({
+      currentTabsIndex: index
+    })
   }
+
+
 })
