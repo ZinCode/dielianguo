@@ -27,8 +27,8 @@ export default class HttpService extends WxRequest{
   }
   
   // 获取theme列表信息
-  getThemeList(){
-    return this.request('GET', this.$$path.theme)
+  getThemeList(params){
+    return this.request('GET', this.$$path.theme, params)
   }
 
   // 获取指定theme下的列表信息
@@ -49,7 +49,7 @@ export default class HttpService extends WxRequest{
   }
 
   // 获取最近新品
-  getRecentProduct() {
+  getRecentProducts() {
     return this.request('GET', this.$$path.productRecent)
   }
 

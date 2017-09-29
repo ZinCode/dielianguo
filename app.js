@@ -1,5 +1,6 @@
 import WxValidate from './assets/plugins/wx-validate/WxValidate'
 import HttpService from './helpers/HttpService'
+import WxApi from './helpers/WxApi'
 import __config from './etc/config'
 
 
@@ -12,6 +13,7 @@ App({
 	},
   // 可以传入自定义验证规则
   WxValidate: (rules, messages) => new WxValidate(rules, messages),
+  WxApi: new WxApi,
   HttpService: new HttpService({
     baseURL: __config.devPath
   }),
