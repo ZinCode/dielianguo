@@ -1,80 +1,79 @@
 // pages/home/category/category.js
 import { Category } from 'category-model.js';
-var category=new Category();  //实例化 home 的推荐页面
+var category = new Category();  //实例化 home 的推荐页面
 
 Page({
   data: {
-    transClassArr:['tanslate0','tanslate1','tanslate2','tanslate3','tanslate4','tanslate5'],
-    currentMenuIndex:0,
-    loadingHidden:false,
+    transClassArr: ['tanslate0', 'tanslate1', 'tanslate2', 'tanslate3', 'tanslate4', 'tanslate5'],
+    currentMenuIndex: 0,
+    loadingHidden: false,
   },
   onLoad: function () {
     this._loadData();
   },
 
   /*加载所有数据*/
-  _loadData:function(callback){
+  _loadData: function (callback) {
     var that = this;
-    category.getCategoryType((categoryData)=>{
+    category.getCategoryType((categoryData) => {
       that.setData({
         categoryTypeArr: categoryData,
         loadingHidden: true
       });
 
       // 默认把第一个分类的数据加载出来
-      that.getProductsByCategory(categoryData[0].id,(data)=>{
-        var dataObj= {
+      that.getProductsByCategory(categoryData[0].id, (data) => {
+        var dataObj = {
           procucts: data,
           topImgUrl: categoryData[0].topic_img.url,
           title: categoryData[0].name
         };
         that.setData({
           loadingHidden: true,
-          categoryInfo0:dataObj
+          categoryInfo0: dataObj
         });
-        callback&& callback();
+        callback && callback();
       });
     });
   },
 
   /*切换分类*/
-  changeCategory:function(event){
-    var index=category.getDataSet(event,'index'),
-        id=category.getDataSet(event,'id')//获取data-set
+  changeCategory: function (event) {
+    var index = category.getDataSet(event, 'index'),
+      id = category.getDataSet(event, 'id')//获取data-set
     this.setData({
-      currentMenuIndex:index
+      currentMenuIndex: index
     });
 
     //如果数据是第一次请求
-    if(!this.isLoadedData(index)) {
-      var that=this;
-      this.getProductsByCategory(id, (data)=> {
-        that.setData(that.getDataObjForBind(index,data));
+    if (!this.isLoadedData(index)) {
+      var that = this;
+      this.getProductsByCategory(id, (data) => {
+        that.setData(that.getDataObjForBind(index, data));
       });
     }
   },
 
   // 判断是否是第一次请求
-  isLoadedData:function(index){
+  isLoadedData: function (index) {
     // 判断有没有这个属性
-    if(this.data['categoryInfo'+index]){
+    if (this.data['categoryInfo' + index]) {
       return true;
     }
     return false;
   },
 
   // 他这种判断方式不好啊
-  getDataObjForBind:function(index,data){
-    var obj={},
-        arr=[0,1,2,3,4,5],
-        baseData=this.data.categoryTypeArr[index];
-        console.log(baseData)
-    for(var item in arr){
-      if(item==arr[index]) {
-        obj['categoryInfo' + item]={
-          procucts:data,
-          topImgUrl:baseData.topic_img.url,
-          title:baseData.name
+  getDataObjForBind: function (index, data) {
+    var obj = {},
+      arr = [0, 1, 2, 3, 4, 5],
+      baseData = this.data.categoryTypeArr[index];
+    for (var item in arr) {
+      if (item == arr[index]) {
+        obj['categoryInfo' + item] = {
+          procucts: data,
+          topImgUrl: baseData.topic_img.url,
+          title: baseData.name
         };
 
         return obj;
@@ -82,9 +81,9 @@ Page({
     }
   },
 
-  getProductsByCategory:function(id,callback){
-    category.getProductsByCategory(id,(data)=> {
-      callback&&callback(data);
+  getProductsByCategory: function (id, callback) {
+    category.getProductsByCategory(id, (data) => {
+      callback && callback(data);
     });
   },
 
@@ -97,8 +96,9 @@ Page({
   },
 
   /*下拉刷新页面*/
-  onPullDownRefresh: function(){
-    this._loadData(()=>{
+  onPullDownRefresh: function () {
+    // 他这里下拉刷新写的不好
+    this._loadData(() => {
       wx.stopPullDownRefresh()
     });
   },
