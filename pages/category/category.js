@@ -1,6 +1,6 @@
 // pages/home/category/category.js
-import { Category } from 'category-model.js';
-var category = new Category();  //实例化 home 的推荐页面
+// import { Category } from 'category-model.js';
+// var category = new Category();  //实例化 home 的推荐页面
 
 Page({
   data: {

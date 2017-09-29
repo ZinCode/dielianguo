@@ -1,5 +1,6 @@
-import { Home } from 'home-model.js';
-var home = new Home();
+// import { Home } from 'home-model.js';
+// var home = new Home();
+const app = getApp();
 
 Page({
   /**
@@ -8,7 +9,10 @@ Page({
   data: {},
 
   onLoad() {
-    this._loadData();
+    app.HttpService.getBannerById({id: 1}).then(res => {
+      console.log(res)
+    })
+    // this._loadData();
   },
 
   // 假装是私有的方法, 相当于只获取页面数据

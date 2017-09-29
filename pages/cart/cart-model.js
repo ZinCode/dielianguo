@@ -1,7 +1,7 @@
 /**
  * Created by jimmy on 17/03/05.
  */
-import {Base} from '../../utils/base.js';
+// import {Base} from '../../utils/base.js';
 
 /*
 * 购物车数据存放在本地，

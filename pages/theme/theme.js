@@ -1,6 +1,6 @@
 // pages/theme/theme.js
-import { Theme } from 'theme-model.js';
-var theme = new Theme();
+// import { Theme } from 'theme-model.js';
+// var theme = new Theme();
 
 Page({
 
@@ -22,7 +22,7 @@ Page({
     this.data.name = name;
 
 
-    this._loadData();
+    // this._loadData();
 
   },
 

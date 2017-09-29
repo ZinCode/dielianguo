@@ -49,10 +49,10 @@ export default class Router {
     });
   }
 
-  //返回一次
-  static back() {
+  //返回一次 默认只返回一级页面，如果delta大于现有页面数，则返回到首页
+  static back(delta = 1) {
     wx.navigateBack({
-      delta: 1,
+      delta: delta,
     });
   }
 }

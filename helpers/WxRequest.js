@@ -1,26 +1,28 @@
-import Config from 'config.js';
+
 
 // HTTP工具类
-export default class Http {
-  constructor() {
-    this.baseRequestUrl = Config.restUrl;
+export default class WxRequest {
+  constructor(defaults) {
+    this.baseURL = ''
+    Object.assign(this, defaults)
   }
 
-  static request(method, url, data) {
+  request(method, url, data = {}) {
     return new Promise((resolve, reject) => {
+      console.log(this)
       const header = this.createAuthHeader();
       wx.request({
         // 拼接url
-        url: `${this.baseRequestUrl}${url}`,
+        url: `${this.baseURL}${url}`,
         // 目前来看是只用到了get和post两种方法，但是为了扩展性，我们需要规范一点
         method: method,
+        data: data,
         header: header,
         success: (res) => {
           // 微信状态校验
           const wxCode = res.statusCode;
           if (wxCode != 200) {
             console.error('服务端请求错误', res)
-            console.log(this);
             this.handleHttpException(res);
             reject(res);
           } else {
@@ -31,8 +33,7 @@ export default class Http {
               reject(res);
             } else {
               // 正确返回数据
-              const serverData = wxData.data;
-              resolve(serverData);
+              resolve(wxData);
             }
           }
         },
@@ -44,10 +45,12 @@ export default class Http {
     })
   }
 
+// 下面整体写的都不够好
+
   /**
    * 错误处理器
    */
-  static handleHttpException(res) {
+  handleHttpException(res) {
     const status = res.statusCode;
     switch (status) {
       case 403:
@@ -67,7 +70,7 @@ export default class Http {
   /**
    * 403无权限错误
    */
-  static handleHttp403Exception(res) {
+  handleHttp403Exception(res) {
     //需要区分两403之间的区别
     console.error(`403-权限错误：${res.data.msg}`);
   }
@@ -75,23 +78,23 @@ export default class Http {
   /**
    * 500内部错误
    */
-  static handleHttp500Exception(res) {
+  handleHttp500Exception(res) {
     console.error(`500-服务器内部错误：${res.data.msg}`);
   }
 
   /**
    * 404 错误
    */
-  static handleHttp404Exception(res) {
+  handleHttp404Exception(res) {
     console.error(`404-请求资源不存在：${res.data.msg}`);
   }
 
   /**
    * 构造权限头部
    */
-  static createAuthHeader() {
+  createAuthHeader() {
     // 获取token
-    const Token = app.globalData.auth.token;
+    const Token = wx.getStorageSync('token');
     var header = {
       'content-type': 'application/json'
     }
@@ -99,31 +102,5 @@ export default class Http {
       header.Token = Token;
     }
     return header;
-  }
-
-
-  /**
-   * 进一步封装常用请求方法
-   * @param {请求url地址} url 
-   * @param {请求数据} data 
-   */
-  static get(url, data) {
-    return this.request("GET", url, data);
-  }
-
-  static put(url, data) {
-    return this.request("PUT", url, data);
-  }
-
-  static post(url, data) {
-    return this.request("POST", url, data);
-  }
-
-  static patch(url, data) {
-    return this.request("PATCH", url, data);
-  }
-
-  static delete(url, data) {
-    return this.request("DELETE", url, data);
   }
 }

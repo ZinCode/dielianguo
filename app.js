@@ -1,5 +1,21 @@
+import WxValidate from './assets/plugins/wx-validate/WxValidate'
+import HttpService from './helpers/HttpService'
+import __config from './etc/config'
+
+
 App({
-  
+  onLaunch() {
+	},
+	onShow() {
+	},
+	onHide() {
+	},
+  // 可以传入自定义验证规则
+  WxValidate: (rules, messages) => new WxValidate(rules, messages),
+  HttpService: new HttpService({
+    baseURL: __config.devPath
+  }),
+  __config
 })
 
 
