@@ -45,7 +45,9 @@ export default class HttpService extends WxRequest{
 
   // 获取指定id的商品
   getProductById(params) {
-    return this.request('GET', this.$$path.productById, params)
+    var id = params.id
+    var url = `${this.$$path.productById}/${id}`
+    return this.request('GET', url)
   }
 
   // 获取最近新品

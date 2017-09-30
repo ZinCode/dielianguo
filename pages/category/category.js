@@ -48,9 +48,6 @@ Page({
         .then(res => {
           this.setData(that.getDataObjForBind(index, res))
         })
-      // this.getProductsByCategory(id, (data) => {
-      //   that.setData(that.getDataObjForBind(index, data));
-      // });
     }
   },
 
@@ -91,10 +88,6 @@ Page({
 
   /*下拉刷新页面*/
   onPullDownRefresh: function () {
-    // 他这里下拉刷新写的不好
-    // this._loadData(() => {
-    //   wx.stopPullDownRefresh()
-    // });
   },
 
   //分享效果
