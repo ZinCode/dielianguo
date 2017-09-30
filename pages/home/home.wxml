@@ -2,7 +2,7 @@
 <import src="../tpls/products/products-tpl.wxml"/>
 
 <view>
-  <swiper indicator-dots="true" autoplay="true" class="swiper">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" current="{{current}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" class="swiper">
     <block wx:for="{{bannerArr}}" wx:key="key_word">
       <swiper-item class="banner-item" data-id="{{item.key_word}}" bindtap="onProductsItemTap">
         <image mode="aspectFill" class="image"  src="{{item.img.url}}"></image>

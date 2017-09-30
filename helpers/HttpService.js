@@ -8,7 +8,7 @@ export default class HttpService extends WxRequest{
       banner:                         '/banner',
       theme:                          '/theme',
       productRecent:                  '/product/recent',
-      productByCategory:              '/product/by_category',
+      productsByCategory:              '/product/by_category',
       productById:                    '/product',
       category:                       '/category/all',
       userToken:                      '/token/user',
@@ -38,9 +38,9 @@ export default class HttpService extends WxRequest{
     return this.request('GET', url)
   }
 
-  // 获取所有种类商品
-  getProductByCateGory(params) {
-    return this.request('GET', thi.$$paths.productByCategory,params)
+  // 获取某种分类下的商品
+  getProductsByCategory(params) {
+    return this.request('GET', this.$$path.productsByCategory,params)
   }
 
   // 获取指定id的商品

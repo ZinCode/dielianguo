@@ -4,7 +4,7 @@
 <view>
   <view class="category-box">
       <view class="left-box">
-        <block wx:for="{{categoryTypeArr}}">
+        <block wx:for="{{categoryArr}}">
           <view class="menu-item {{currentMenuIndex==index?'selected':''}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="changeCategory" data-title-name="{{item.name}}">
             {{item.name}}
           </view>
@@ -35,7 +35,4 @@
     </view>
 
   </view>
-  <loading hidden="{{loadingHidden}}">
-    加载中...
-  </loading>
 </view>

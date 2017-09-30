@@ -7,7 +7,14 @@ Page({
   data: {
     bannerArr:[],
     themeArr: [],
-    recentProductsArr: []
+    recentProductsArr: [],
+    // 轮播图
+    indicatorDots: !0,
+    autoplay: !1,
+    current: 0,
+    interval: 3000,
+    duration: 1000,
+    circular: !0,
   },
 
   onLoad() {

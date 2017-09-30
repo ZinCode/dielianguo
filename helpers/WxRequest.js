@@ -9,7 +9,6 @@ export default class WxRequest {
 
   request(method, url, data = {}) {
     return new Promise((resolve, reject) => {
-      console.log(this)
       const header = this.createAuthHeader();
       wx.request({
         // 拼接url
