@@ -22,7 +22,7 @@
 .home-main-header{
   display: flex;
   height: 60rpx;
-  color: #AB956D;
+  color: #DE5253;
   background-color: #fff;
   font-size: 32rpx;
   align-items: center;

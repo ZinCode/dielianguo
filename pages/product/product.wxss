@@ -27,7 +27,7 @@
 }
 .fixed-cart view{
   font-size: 24rpx;
-  background-color: #AB956D;
+  background-color: #DE5253;
   color: white;
   position: absolute;
   right: 64rpx;
@@ -58,7 +58,7 @@
   height: 100rpx;
   margin: 30rpx auto;
   border-radius: 100rpx;
-  background-color: #AB956D;
+  background-color: #DE5253;
   color: #fff;
   display: flex;
   align-items: center;
@@ -183,10 +183,10 @@
   border-bottom: 1rpx solid #D0D0D7;
 }
 .tabs-item.selected{
-  /*color: #AB956D;*/
-  color: rgba(171,149,109,.8);
-  /*border-bottom: 2px solid #AB956D;*/
-  border-bottom: 2px solid rgba(171,149,109,.8);
+  /*color: #DE5253;*/
+  color: rgba(224,81,83,0.8);
+  /*border-bottom: 2px solid #DE5253;*/
+  border-bottom: 2px solid rgba(208, 67, 75, 0.8);
 }
 .product-detail-box{
   padding-bottom: 20rpx;

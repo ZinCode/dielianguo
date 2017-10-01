@@ -19,7 +19,7 @@
 }
 .category-title text{
     font-size: 24rpx;
-    color:#AB956D;
+    color:#DE5253;
 }
 .category-title text::before,.category-title text::after{
     content: '';

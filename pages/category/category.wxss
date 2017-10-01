@@ -23,8 +23,8 @@
     border-left: 6rpx solid #fff;
 }
 .menu-item.selected{
-    color: #AB956D;
-    border-left-color:#AB956D;
+    color: #DE5253;
+    border-left-color:#DE5253;
 }
 
 .right-box{

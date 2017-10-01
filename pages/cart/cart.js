@@ -1,10 +1,10 @@
 // var CartObj = require('cart-model.js');
 
-// import {Cart} from 'cart-model.js';
-
-// var cart=new Cart(); //实例化 购物车
-// var x1=0;
-// var x2=0;
+import Cart from 'cart-model';
+const app = getApp();
+const cart = new Cart();
+var x1=0;
+var x2=0;
 
 Page({
     data: {
@@ -74,11 +74,16 @@ Page({
 
 
     /*调整商品数目*/
-    changeCounts:function(event){
-        var id=cart.getDataSet(event,'id'),
-            type=cart.getDataSet(event,'type'),
-            index=this._getProductIndexById(id),
-            counts=1;
+    changeCounts:function(e){
+        var data = e.currentTarget.dataset,
+            id = data.id,
+            type = data.type,
+            index = this._getProductIndexById(id),
+            counts = 1
+        // var id=cart.getDataSet(event,'id'),
+        //     type=cart.getDataSet(event,'type'),
+        //     index=this._getProductIndexById(id),
+        //     counts=1;
         if(type=='add') {
             cart.addCounts(id);
         }else{
@@ -102,8 +107,9 @@ Page({
     },
 
     /*删除商品*/
-    delete:function(event){
-        var id=cart.getDataSet(event,'id'),
+    delete:function(e){
+        var data = e.currentTarget.dataset,
+            id = data.id,
         index=this._getProductIndexById(id);
         this.data.cartData.splice(index,1);//删除某一项商品
 
@@ -114,17 +120,18 @@ Page({
     },
 
     /*选择商品*/
-    toggleSelect:function(event){
-        var id=cart.getDataSet(event,'id'),
-            status=cart.getDataSet(event,'status'),
+    toggleSelect:function(e){
+        var data = e.currentTarget.dataset,
+            id = data.id,
+            status = data.status,
             index=this._getProductIndexById(id);
         this.data.cartData[index].selectStatus=!status;
         this._resetCartData();
     },
 
     /*全选*/
-    toggleSelectAll:function(event){
-        var status=cart.getDataSet(event,'status')=='true';
+    toggleSelectAll:function(e){
+        var status = e.currentTarget.dataset.status == 'true';
         var data=this.data.cartData,
             len=data.length;
         for(let i=0;i<len;i++) {

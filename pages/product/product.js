@@ -1,4 +1,6 @@
+import Cart from '../cart/cart-model';
 const app = getApp();
+const cart = new Cart();
 
 Page({
     data: {
@@ -26,7 +28,7 @@ Page({
         app.HttpService.getProductById({id: this.data.id})
             .then(res => {
                 this.setData({
-                    // cartTotalCounts: cart.getCartTotalCounts().counts1,
+                    cartTotalCounts: cart.getCartTotalCounts().counts1,
                     product: res
                 })
             })

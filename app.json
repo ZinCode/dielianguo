@@ -12,7 +12,7 @@
   "window": {
     "navigationBarTitleText": "蝶恋果",
     "navigationBarTextStyle": "#FFFFFF",
-    "navigationBarBackgroundColor": "#AB956D",
+    "navigationBarBackgroundColor": "#DE5253",
     "backgroundColor": "#FFFFFF",
     "backgroundTextStyle": "dark",
     "enablePullDownRefresh": true
@@ -45,7 +45,7 @@
       }
     ],
     "backgroundColor": "#F5F5F5",
-    "selectedColor": "#AB956D",
+    "selectedColor": "#DE5253",
     "color": "#989898",
     "borderStyle": "white",
     "position": "bottom"

@@ -1,17 +1,12 @@
-/**
- * Created by jimmy on 17/03/05.
- */
-// import {Base} from '../../utils/base.js';
-
+const app = getApp()
 /*
 * 购物车数据存放在本地，
 * 当用户选中某些商品下单购买时，会从缓存中删除该数据，更新缓存
 * 当用用户全部购买时，直接删除整个缓存
 *
 */
-class Cart extends Base{
+export default class Cart{
     constructor(){
-        super();
         this._storageKeyName='cart';
     };
 
@@ -21,7 +16,7 @@ class Cart extends Base{
     * flag - {bool} 是否过滤掉不下单的商品
     */
     getCartDataFromLocal(flag){
-        var res = wx.getStorageSync(this._storageKeyName);
+        var res = app.WxApi.getStorageSync(this._storageKeyName);
         if(!res){
             res=[];
         }
@@ -70,7 +65,7 @@ class Cart extends Base{
 
     /*本地缓存 保存／更新*/
     execSetStorageSync(data){
-        wx.setStorageSync(this._storageKeyName,data);
+        app.WxApi.setStorageSync(this._storageKeyName,data);
     };
 
 
@@ -168,5 +163,3 @@ class Cart extends Base{
         this.execSetStorageSync(cartData);
     }
 }
-
-export {Cart};
