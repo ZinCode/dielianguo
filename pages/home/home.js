@@ -26,7 +26,7 @@ Page({
     app.HttpService.getBannerById({id:1})
       .then(res => {
         this.setData({
-          bannerArr: res
+          bannerArr: res.items
         })
       })
   },

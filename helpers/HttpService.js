@@ -12,6 +12,7 @@ export default class HttpService extends WxRequest{
       productById:                    '/product',
       category:                       '/category/all',
       userToken:                      '/token/user',
+      verifyToken:                    '/token/verify',
       address:                        '/address',
       order:                          '/order',
       orderByUser:                    '/order/by_user',
@@ -63,6 +64,16 @@ export default class HttpService extends WxRequest{
   // 获取登录Token
   postUserToken(params) {
     return this.request('POST', this.$$path.userToken, params)
+  }
+
+  // 验证token准确性
+  postVerifyToken(params) {
+    return this.request('POST', this.$$path.verifyToken, params)
+  }
+
+  // 获取收货地址
+  getUserAddress() {
+    return this.request('GET', this.$$path.address)
   }
 
   // 更新收货地址
