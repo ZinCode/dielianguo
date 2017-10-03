@@ -95,11 +95,11 @@ export default class HttpService extends WxRequest{
 
   // 获取订单列表（分页）
   getOrderList(params) {
-    return this.request('GET', this.$$path.orderByUserder, params)
+    return this.request('GET', this.$$path.orderByUser, params)
   }
 
   // 支付订单
-  postOrder(params) {
+  postPayOrder(params) {
     return this.request('POST', this.$$path.payOrder, params)
   }
 }

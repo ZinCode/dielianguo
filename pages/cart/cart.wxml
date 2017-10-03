@@ -4,7 +4,7 @@
             <block wx:for="{{cartData}}">
                 <view class="cart-item {{deleteFlag&&index==currentIndex?'showDeleteBtn':'hideDeleteBtn'}}">
                     <view class="cart-item-main" data-id="{{item.id}}" data-index="{{index}}">
-                        <view class="cart-item-checkbox" ontap="toggleSelect" data-id="{{item.id}}" data-status="{{item.selectStatus}}">
+                        <view class="cart-item-checkbox" bindtap="toggleSelect" data-id="{{item.id}}" data-status="{{item.selectStatus}}">
                             <image wx:if="{{item.selectStatus}}" src="../../assets/imgs/icon/circle@selected.png"></image>
                             <image wx:else src="../../assets/imgs/icon/circle@noselected.png"></image>
                         </view>
@@ -30,7 +30,7 @@
             </block>
         </view>
         <view class="footer-account-box all-accounts-box">
-            <view class="all-select" ontap="toggleSelectAll" data-status="{{selectedTypeCounts==cartData.length?'true':'false'}}">
+            <view class="all-select" bindtap="toggleSelectAll" data-status="{{selectedTypeCounts==cartData.length?'true':'false'}}">
                 <image wx:if="{{selectedTypeCounts==cartData.length}}" class="title-icon" src="../../assets/imgs/icon/all@selected.png"></image>
                 <image wx:else class="title-icon" src="../../assets/imgs/icon/all.png"></image>
                 <text>全选({{selectedCounts}})</text>

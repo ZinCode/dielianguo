@@ -8,30 +8,31 @@ export default class Order {
 
 
     // 下订单
-    dOrder(params) {
-        return app.HttpService.postOrder({ paoducts: params })
+    doOrder(params) {
+        return app.HttpService.postOrder({ products: params })
             .then(data => {
                 this.execSetStorageSync(true)
+                return data
             })
     }
 
 
     /*下订单*/
-    qdoOrder(param, callback) {
-        var that = this;
-        var allParams = {
-            url: 'order',
-            type: 'post',
-            data: { products: param },
-            sCallback: function (data) {
-                that.execSetStorageSync(true);
-                callback && callback(data);
-            },
-            eCallback: function () {
-            }
-        };
-        this.request(allParams);
-    }
+    // qdoOrder(param, callback) {
+    //     var that = this;
+    //     var allParams = {
+    //         url: 'order',
+    //         type: 'post',
+    //         data: { products: param },
+    //         sCallback: function (data) {
+    //             that.execSetStorageSync(true);
+    //             callback && callback(data);
+    //         },
+    //         eCallback: function () {
+    //         }
+    //     };
+    //     this.request(allParams);
+    // }
     /*
    * 拉起微信支付
    * params:
@@ -41,17 +42,36 @@ export default class Order {
    * */
     // 这个方法写的还不够好
     execPay(orderNumber) {
-        return app.HttpService.postOrder({ id: orderNumber })
+        return app.HttpService.postPayOrder({ id: orderNumber })
             .then(res => {
+                // 根据服务器返回的时间戳来判断是否可以支付
                 var timeStamp = res.timeStamp;
                 if (timeStamp) {
-                    app.WxApi.requestPayment({
-                        'timeStamp': timeStamp.toString(),
-                        'nonceStr': data.nonceStr,
-                        'package': data.package,
-                        'signType': data.signType,
-                        'paySign': data.paySign
+                    return new Promise((resolve, reject) => {
+                        wx.requestPayment({
+                            'timeStamp': timeStamp.toString(),
+                            'nonceStr': data.nonceStr,
+                            'package': data.package,
+                            'signType': data.signType,
+                            'paySign': data.paySign,
+                            success(){
+                                resolve(2)
+                            },
+                            fali(){
+                                resolve(1)
+                            }
+                        })
                     })
+                    // return wx.requestPayment({
+                    //     'timeStamp': timeStamp.toString(),
+                    //     'nonceStr': data.nonceStr,
+                    //     'package': data.package,
+                    //     'signType': data.signType,
+                    //     'paySign': data.paySign,
+                    //     success(){}
+                    // })
+                } else {
+                    return Promise.resolve(0)
                 }
             })
     }
@@ -69,6 +89,7 @@ export default class Order {
             data: { id: orderNumber },
             sCallback: function (data) {
                 var timeStamp = data.timeStamp;
+                // 根据服务器返回的时间戳来判断是否可以支付
                 if (timeStamp) { //可以支付
                     wx.requestPayment({
                         'timeStamp': timeStamp.toString(),
@@ -84,6 +105,7 @@ export default class Order {
                         }
                     });
                 } else {
+                    // 服务器自己的原因造成的错误
                     callback && callback(0);
                 }
             }
@@ -91,61 +113,39 @@ export default class Order {
         this.request(allParams);
     }
 
-    // 这个方法可以不用再这里写吧
+    /*获得所有订单,pageIndex 从1开始*/
     getOrders(pageIndex) {
         return app.HttpService.getOrderList({page: pageIndex})
     }
 
-    /*获得所有订单,pageIndex 从1开始*/
-    qgetOrders(pageIndex, callback) {
-        var allParams = {
-            url: 'order/by_user',
-            data: { page: pageIndex },
-            type: 'get',
-            sCallback: function (data) {
-                callback && callback(data);  //1 未支付  2，已支付  3，已发货，4已支付，但库存不足
-            }
-        };
-        this.request(allParams);
-    }
 
+    // qgetOrders(pageIndex, callback) {
+    //     var allParams = {
+    //         url: 'order/by_user',
+    //         data: { page: pageIndex },
+    //         type: 'get',
+    //         sCallback: function (data) {
+    //             callback && callback(data);  //1 未支付  2，已支付  3，已发货，4已支付，但库存不足
+    //         }
+    //     };
+    //     this.request(allParams);
+    // }
+    /*获得订单的具体内容*/
     getOrderInfoById(id) {
         return app.HttpService.getOrderById({id: id})
     }
 
-
-    /*获得订单的具体内容*/
-    qgetOrderInfoById(id, callback) {
-        var that = this;
-        var allParams = {
-            url: 'order/' + id,
-            sCallback: function (data) {
-                callback && callback(data);
-            },
-            eCallback: function () {
-
-            }
-        };
-        this.request(allParams);
-    }
-
+    /*本地缓存 保存／更新*/
     execSetStorageSync(data) {
         app.WxApi.setStorageSync(this._storageKeyName, data)
     }
-    /*本地缓存 保存／更新*/
-    qexecSetStorageSync(data) {
-        wx.setStorageSync(this._storageKeyName, data);
-    };
 
+    /*是否有新的订单*/
     hasNewOrder() {
         var flag = app.WxApi.getStorageSync(this._storageKeyName)
         return flag == true;
     }
-    /*是否有新的订单*/
-    qhasNewOrder() {
-        var flag = wx.getStorageSync(this._storageKeyName);
-        return flag == true;
-    }
+
 
 }
 

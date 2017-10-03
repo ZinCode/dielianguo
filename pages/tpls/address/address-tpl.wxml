@@ -12,7 +12,7 @@
       <picker bindchange="bindChangeProvince" value="{{index}}" range="{{areaData.p}}">
         <view>
           <text>123{{province}}</text>
-          <image class="counts-icon" src="../../../imgs/icon/arrow-down.png"></image>
+          <image class="counts-icon" src="../../../assets/imgs/icon/arrow-down.png"></image>
         </view>
       </picker>
     </view>

@@ -5,7 +5,7 @@
     background-color:#EDEDED;
 }
 .my-header{
-    background-color: #AB956D;
+    background-color: #DE5253;
     color: #fff;
     display: flex;
     align-items: center;
@@ -57,7 +57,7 @@
 }
 .section .arrow-icon{
     flex-basis: 40rpx;
-    background-color: #AB956D;
+    background-color: #DE5253;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -5,7 +5,7 @@ export default class Address {
 
   // 获取自己的收获地址
   getAddress() {
-    return app.HttpService.getAddress()
+    return app.HttpService.getUserAddress()
       .then(res => {
         if (res) {
           res.totalDetail = this.setAddressInfo(res)
@@ -16,6 +16,7 @@ export default class Address {
 
   // 保存收获地址
   _setUpAddress(res) {
+    // 因为数据库字段名和微信返回的数据字段名不一样，所以重新改一下字段名
     var formData = {
       name: res.userName,
       province: res.provinceName,
@@ -52,7 +53,6 @@ export default class Address {
       country = res.countyName || res.country,
       detail = res.detailInfo || res.detail;
     var totalDetail = city + country + detail;
-    console.log(res);
     //直辖市，取出省部分
     if (!this.isCenterCity(province)) {
       totalDetail = province + totalDetail;

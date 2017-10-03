@@ -1,4 +1,4 @@
-
+import Token from '../utils/token';
 
 // HTTP工具类
 export default class WxRequest {
@@ -6,8 +6,8 @@ export default class WxRequest {
     this.baseURL = ''
     Object.assign(this, defaults)
   }
-
-  request(method, url, data = {}) {
+  //http 请求类, 当noRefech为true时，不做未授权重试机制
+  request(method, url, data = {}, noRefetch) {
     return new Promise((resolve, reject) => {
       const header = this.createAuthHeader();
       wx.request({
@@ -20,20 +20,35 @@ export default class WxRequest {
         success: (res) => {
           // 微信状态校验
           const wxCode = res.statusCode;
-          if (wxCode != 200) {
-            console.error('服务端请求错误', res)
-            this.handleHttpException(res);
-            reject(res);
-          } else {
-            // 服务端状态校验
+          if (200 <= wxCode && wxCode < 300) {
             const wxData = res.data;
             if (wxData.error_code) {
               console.error('服务端业务错误', res);
               reject(res);
             } else {
-              // 正确返回数据
               resolve(wxData);
             }
+            // console.error('服务端请求错误', res)
+            // this.handleHttpException(res);
+            // reject(res);
+          } else {
+            if (wxCode == 401) {
+              if (!noRefetch) {
+                // 重新请求一遍
+                this._refetch(method, url, data)
+              }
+            } else {
+              reject(res)
+            }
+            // 服务端状态校验
+            // const wxData = res.data;
+            // if (wxData.error_code) {
+            //   console.error('服务端业务错误', res);
+            //   reject(res);
+            // } else {
+            //   // 正确返回数据
+            //   resolve(wxData);
+            // }
           }
         },
         fail(res) {
@@ -44,7 +59,15 @@ export default class WxRequest {
     })
   }
 
-// 下面整体写的都不够好
+  _refetch(method,url, data) {
+    var token = new Token();
+    token.getTokenFromServer()
+      .then(_ => {
+        // 为true不会再继续调用了
+        this.request(method, url, data, true)
+      })
+  }
+  // 下面整体写的都不够好
 
   /**
    * 错误处理器
@@ -56,7 +79,7 @@ export default class WxRequest {
         this.handleHttp403Exception(res);
         break;
       case 404:
-        this.handleHTTP404Exception(res);
+        this.handleHttp404Exception(res);
         break;
       case 500:
         this.handleHttp500Exception(res);

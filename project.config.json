@@ -12,7 +12,7 @@
 	"projectname": "%E4%BC%98%E6%9E%9C%E9%B2%9C",
 	"condition": {
 		"weapp": {
-			"current": -1,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -30,6 +30,30 @@
 					"id": -1,
 					"name": "分类页",
 					"pathName": "pages/category/category",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/cart/cart",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "订单--from=cart",
+					"pathName": "pages/order/order",
+					"query": "account=0.08&from=cart"
+				},
+				{
+					"id": -1,
+					"name": "订单--from=my",
+					"pathName": "pages/order/order",
+					"query": "account=0.08&from=my"
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/my/my",
 					"query": ""
 				}
 			]
