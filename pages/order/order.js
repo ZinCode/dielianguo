@@ -48,6 +48,7 @@ Page({
 
   onShow() {
     if (this.data.id) {
+      var id = this.data.id
       order.getOrderInfoById(id)
         .then(data => {
           this.setData({
@@ -59,12 +60,11 @@ Page({
               orderNo: data.order_no
             },
           })
+          // 快照地址
+          var addressInfo = data.snap_address;
+          addressInfo.totalDetail = address.setAddressInfo(addressInfo);
+          this._bindAddressInfo(addressInfo);
         })
-
-      // 快照地址
-      var addressInfo = data.snap_address;
-      addressInfo.totalDetail = address.setAddressInfo(addressInfo);
-      this._bindAddressInfo(addressInfo);
     }
   },
 
@@ -113,8 +113,8 @@ Page({
   _firstTimePay() {
     var orderInfo = [],
       procuctInfo = this.data.productsArr;
-      // 这里为什么要再次new一边呢？
-      // order = new Order();
+    // 这里为什么要再次new一边呢？
+    // order = new Order();
     for (let i = 0; i < procuctInfo.length; i++) {
       orderInfo.push({
         product_id: procuctInfo[i].id,

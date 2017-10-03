@@ -22,7 +22,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.loadData()
+    this.loadData();
+    this.getAddressInfo();
   },
   loadData() {
     app.WxApi.login()
@@ -84,8 +85,9 @@ Page({
         if (res.telNumber) {
           this._bindAddressInfo(addressInfo)
           // 保存地址
-          address.submitAdderss()
+          address.submitAddress(res)
             .then(flag => {
+              console.log(flag)
               if (!flag) {
                 this.showTips('操作提示', '地址信息更新失败!')
               }
@@ -105,7 +107,7 @@ Page({
   },
 
   // 未支付订单再次支付
-  repay(e) {
+  rePay(e) {
     var data = e.currentTarget.dataset,
       id = data.id,
       index = data.index;
@@ -153,7 +155,8 @@ Page({
 
   // 滑动到底部刷新
   onReachBottom() {
-    if (!this.data.isLoadedAll) {
+    // 如果没有更多数据就不让他执行下面的方法
+    if (!this.data.isLoadedALL) {
       this.data.pageIndex++;
       this.getOrders()
     }
@@ -166,7 +169,7 @@ Page({
    * content - {string}内容
    * flag - {bool}是否跳转到 "我的页面"
    */
-  showTips: function (title, content) {
+  showTips(title, content) {
     wx.WxApi.showModal({
       title: title,
       content: content,
