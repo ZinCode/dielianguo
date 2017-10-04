@@ -1,6 +1,4 @@
-// pages/theme/theme.js
-// import { Theme } from 'theme-model.js';
-// var theme = new Theme();
+const app = getApp();
 
 Page({
 
@@ -8,12 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    themeInfo: {}
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     // 他这个小程序写的不好，需要改一下
     var id = options.id;
@@ -22,7 +17,7 @@ Page({
     this.data.name = name;
 
 
-    // this._loadData();
+    this._loadData();
 
   },
 
@@ -30,17 +25,24 @@ Page({
   onReady() {
     // 动态设置标题栏
     // 最好设置在onReady中  https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/page.html
-    wx.setNavigationBarTitle({
+    app.WxApi.setNavigationBarTitle({
       title: this.data.name
     })
   },
 
   _loadData() {
-    theme.getProductsData(this.data.id, (data) => {
-      this.setData({
-        themeInfo: data
+    app.HttpService.getThemeById({ id: this.data.id })
+      .then(res => {
+        this.setData({
+          themeInfo: res
+        })
       })
+  },
+  // 点击某件商品图片
+  onProductsItemTap(e) {
+    app.WxApi.navigateTo('/pages/product/product', {
+      id: e.currentTarget.dataset.id
     })
-  }
+  },
 
 })

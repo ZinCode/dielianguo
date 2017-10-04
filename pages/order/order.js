@@ -24,48 +24,54 @@ Page({
     * 2.旧的订单
     */
   onLoad(options) {
-    var flag = options.from == 'cart';
-    this.data.fromCartFlag = flag;
-    this.data.account = options.account;
-    // 来自于购物车
-    if (flag) {
-      this.setData({
-        productsArr: cart.getCartDataFromLocal(true),
-        account: options.account,
-        orderStatus: 0
-      })
-      /*显示收获地址*/
-      address.getAddress()
-        .then(res => {
-          this._bindAddressInfo(res);
-        })
-    }
-    else {
-      // 旧订单
-      this.data.id = options.id
+    var from = options.from;
+    if (from == 'cart') {
+      this.fromCart(options.account)
+    } else {
+      this.data.id = options.id;
     }
   },
 
   onShow() {
     if (this.data.id) {
       var id = this.data.id
-      order.getOrderInfoById(id)
-        .then(data => {
-          this.setData({
-            orderStatus: data.status,
-            productsArr: data.snap_items,
-            account: data.total_price,
-            basicInfo: {
-              orderTime: data.create_time,
-              orderNo: data.order_no
-            },
-          })
-          // 快照地址
-          var addressInfo = data.snap_address;
-          addressInfo.totalDetail = address.setAddressInfo(addressInfo);
-          this._bindAddressInfo(addressInfo);
-        })
+      this.fromOrder(id)
     }
+  },
+
+  // 来自于购物车
+  fromCart(account) {
+    var productsArr;
+    this.data.account = account;
+    productsArr = cart.getCartDataFromLocal(true);
+    this.setData({
+      productsArr: productsArr,
+      account: account,
+      orderStatus: 0
+    })
+    address.getAddress()
+      .then(res => {
+        this._bindAddressInfo(res);
+      })
+  },
+  // 来自于订单
+  fromOrder(id) {
+    order.getOrderInfoById(id)
+      .then(data => {
+        this.setData({
+          orderStatus: data.status,
+          productsArr: data.snap_items,
+          account: data.total_price,
+          basicInfo: {
+            orderTime: data.create_time,
+            orderNo: data.order_no
+          },
+        })
+        // 快照地址
+        var addressInfo = data.snap_address;
+        addressInfo.totalDetail = address.setAddressInfo(addressInfo);
+        this._bindAddressInfo(addressInfo);
+      })
   },
 
   // 修改或添加地址信息

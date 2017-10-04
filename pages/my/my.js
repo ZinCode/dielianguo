@@ -25,18 +25,60 @@ Page({
     this.loadData();
     this.getAddressInfo();
   },
+
+  // 重新加载订单
+  onShow() {
+    var newOrderFlag = order.hasNewOrder();
+    if (this.data.loadingHidden && newOrderFlag) {
+      this.onPullDownRefresh();
+    }
+  },
+
   loadData() {
     app.WxApi.login()
       .then(_ => {
-        app.WxApi.getUserInfo()
-          .then(res => {
-            this.setData({
-              userInfo: res.userInfo
-            })
+        this.getUserInfo()
+          .then(_ => {
             this.getOrders()
-            order.execSetStorageSync(false);  //更新标志位
+              .then(_ => {
+                order.execSetStorageSync(false);      // 更新标志位
+              })
+          }).catch(err => {
+            this.catchGetUserInfo()
           })
       })
+  },
+  // 获取用户信息
+  getUserInfo() {
+    return app.WxApi.getUserInfo()
+      .then(res => {
+        this.setData({
+          userInfo: res.userInfo
+        })
+      })
+  },
+  // 获取用户信息失败的情况
+  catchGetUserInfo() {
+    // return this.showTips('提示', '检测到您没打开用户信息权限，是否去设置打开?')
+    //   .then(_ => {
+    //     app.WxApi.openSetting()
+    //       .then(res => {
+    //         app.WxApi.getSetting()
+    //           .then(data => {
+    //             console.log(data)
+    //             this.getUserInfo()
+    //           })
+    //       })
+    //   }).catch(err => {
+    // 用户没有打开授权只能显示默认的头像
+    this.setData({
+      userInfo: {
+        avatarUrl: '../../assets/icon/user@default.png',
+        nickName: '碟恋果'
+      },
+      loadingHidden: true
+    })
+    // })
   },
   // 订单信息
   getOrders() {
@@ -170,7 +212,7 @@ Page({
    * flag - {bool}是否跳转到 "我的页面"
    */
   showTips(title, content) {
-    wx.WxApi.showModal({
+    return app.WxApi.showModal({
       title: title,
       content: content,
       showCancel: false
