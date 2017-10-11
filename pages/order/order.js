@@ -108,11 +108,12 @@ Page({
       this.showTips('下单提示', '请填写您的收货地址');
       return;
     }
-    if (this.data.orderStatus == 0) {
-      this._firstTimePay();
-    } else {
-      this._oneMoresTimePay();
-    }
+    this.showTips('提示', '支付功能已屏蔽');
+    // if (this.data.orderStatus == 0) {
+    //   this._firstTimePay();
+    // } else {
+    //   this._oneMoresTimePay();
+    // }
   },
 
   // 第一次支付

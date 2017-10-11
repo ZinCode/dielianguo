@@ -1,4 +1,4 @@
-/* pages/home/category/category.wxss */
+
 @import "../tpls/category/category-tpl.wxss";
 
 .category-container{

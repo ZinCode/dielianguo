@@ -16,7 +16,7 @@
                     <view>
                         <text class="counts-tips">数量</text>
                         <text class="counts-data">{{productCounts}}</text>
-                        <image class="counts-icon" src="../../asstes/imgs/icon/arrow@down.png"></image>
+                        <image class="counts-icon" src="../../assets/imgs/icon/arrow@down.png"></image>
                     </view>
                 </picker>
             </view>

@@ -91,10 +91,10 @@ Page({
   },
 
   //分享效果
-  onShareAppMessage: function () {
+  onShareAppMessage () {
     return {
-      title: '零食商贩 Pretty Vendor',
-      path: 'pages/category/category'
+      title: '蝶恋果 Butterfly Love Fruits',
+      path: '/pages/category/category'
     }
   }
 

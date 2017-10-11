@@ -69,7 +69,7 @@ Page({
   // 分享
   onShareAppMessage(){
     return {
-      title: '碟恋果',
+      title: '蝶恋果',
       path: '/pages/home/home'
     }
   }

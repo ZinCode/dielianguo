@@ -33,7 +33,7 @@ export default class Token {
       wx.login({
         success(res) {
           wx.request({
-            url: 'http://z.cn/api/v1/token/user',
+            url: 'https://urguo.com/api/v1/token/user',
             method: 'POST',
             data: {
               code: res.code

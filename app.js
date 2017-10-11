@@ -15,7 +15,7 @@ App({
   WxValidate: (rules, messages) => new WxValidate(rules, messages),
   WxApi: new WxApi,
   HttpService: new HttpService({
-    baseURL: __config.devPath
+    baseURL: __config.Path
   }),
   __config
 })

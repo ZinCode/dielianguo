@@ -10,7 +10,6 @@ Page({
   },
 
   onLoad: function (options) {
-    // 他这个小程序写的不好，需要改一下
     var id = options.id;
     var name = options.name;
     this.data.id = id;
@@ -26,7 +25,7 @@ Page({
     // 动态设置标题栏
     // 最好设置在onReady中  https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/page.html
     app.WxApi.setNavigationBarTitle({
-      title: this.data.name
+      title: decodeURI(this.data.name)
     })
   },
 
@@ -44,5 +43,13 @@ Page({
       id: e.currentTarget.dataset.id
     })
   },
+
+  //分享效果
+  onShareAppMessage() {
+    return {
+      title: '蝶恋果 Butterfly Love Fruits',
+      path: 'pages/theme/theme?id=' + this.data.id + '&name=' + this.data.name
+    }
+  }
 
 })

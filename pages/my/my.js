@@ -74,7 +74,7 @@ Page({
     this.setData({
       userInfo: {
         avatarUrl: '../../assets/icon/user@default.png',
-        nickName: '碟恋果'
+        nickName: '蝶恋果'
       },
       loadingHidden: true
     })
@@ -154,7 +154,8 @@ Page({
       id = data.id,
       index = data.index;
     // 支付操作
-    this._execPay(id, index)
+    // this._execPay(id, index)
+    this.showTips('支付功能已屏蔽');
   },
 
   // 支付
